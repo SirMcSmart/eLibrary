@@ -15,5 +15,8 @@ namespace eLibraryPortal.Data.Models
         public string BookNameUrl { get; set; }
         public string uploadedDate { get; set; }
         public Boolean IsDeleted { get; set; }
+        //To be deleted
+        public string BookDesc1 { get; set; }
+        public string BookName1 { get; set; }
     }
 }
