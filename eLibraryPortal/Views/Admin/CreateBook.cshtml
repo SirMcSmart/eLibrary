@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewData["Title"] = "Create Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div  class="container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-10 col-md-10 ">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h2 class="card-title"> Create Book</h2>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Admin" asp-controller="PostCreateBook" method="post" enctype="multipart/form-data">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Book Name</label>
+                                            <input type="text" name="BookName" value="" class="form-control" placeholder="Enter Book Name" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Book Edition</label>
+                                            <input type="text" name="BookEdition" value="" class="form-control" placeholder="Enter Book Edition" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>ISBN</label>
+                                            <input type="text" name="ISBN" value="" class="form-control" placeholder="Enter ISBN" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>BookAuthor</label>
+                                            <input type="text" name="BookAuthor" value="" class="form-control" placeholder="Enter BookAuthor" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>BookAuthor</label>
+                                            <input type="text" name="BookAuthor" value="" class="form-control" placeholder="Enter BookAuthor" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <select class="form-control" name="Categories">
+                                                <option disabled="disabled" value="">Select Category</option>
+                                                <option value="Science">Science</option>
+                                                <option value="Fiction">Fiction</option>
+                                                <option value="Classy">Classy</option>
+                                                <option value="Investigative">Investigative</option>
+                                                <option value="Romance">Romance</option>
+                                                <option value="Commedy">Commedy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="file" name="BookImage" value="" />
+                                            <p> <small>Upload the picture of this book.</small></p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="file" name="FileAthachment" value="" required/>
+                                            <p> <small>Upload the book.</small></p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+

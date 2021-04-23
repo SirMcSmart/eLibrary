@@ -14,7 +14,7 @@ namespace eLibraryPortal.Data.Models
         public string BookAuthor { get; set; }
         public Category Categories { get; set; }
         public byte[] BookImage { get; set; }
-        public string FileAthachmentName     { get; set; }
+        public byte[] FileAthachment   { get; set; }
         public DateTime PublishedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

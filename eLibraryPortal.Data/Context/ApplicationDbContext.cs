@@ -1,4 +1,5 @@
 ﻿using eLibraryPortal.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,11 @@ using System.Text;
 
 namespace eLibraryPortal.Data.Context
 {
-    public class ApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<Users,UserRole, long>
     {
-        public ApplicationDbContext() 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-                
+
         }
 
         public DbSet<Book> Books { get; set; }
