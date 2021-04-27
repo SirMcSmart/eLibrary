@@ -16,6 +16,11 @@ namespace eLibraryPortal.Controllers
         {
             _adminFunc = adminFun;
         }
+
+        public IActionResult LandingPage()
+        {
+            return View();
+        }
         public IActionResult CreateBook()
         {
             return View();

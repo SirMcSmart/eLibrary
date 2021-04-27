@@ -10,5 +10,6 @@ namespace eLibraryPortal.Core.Interface
     public interface IAdminFunction
     {
         Task<bool> SaveBook(Book book, IFormFile BookImage, IFormFile FileAthachment);
+       
     }
 }
