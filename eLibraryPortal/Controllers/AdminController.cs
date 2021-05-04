@@ -34,7 +34,20 @@ namespace eLibraryPortal.Controllers
             {
                 if (book.BookName != null || book.BookEdition != null)
                 {
+                   
                     var status = await _adminFunc.SaveBook( book, BookImage , FileAthachment);
+                    if(status == true)
+                    {
+                        //Successful
+                    }
+                    else
+                    {
+                        //Not Successful
+                    }
+                }
+                else
+                {
+
                 }
                 return View("CreateBook");
 
@@ -44,6 +57,11 @@ namespace eLibraryPortal.Controllers
 
                 throw ex;
             }
+        }
+
+        public IActionResult BookList()
+        {
+            return View();
         }
     }
 }

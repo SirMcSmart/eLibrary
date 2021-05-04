@@ -14,9 +14,8 @@
     <!--    Favicons-->
     <!-- ===============================================-->
     <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicons/favicon.ico">
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/images/icons/favicon.ico">
     <link rel="manifest" href="~/assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="~/assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
@@ -26,6 +25,28 @@
     <!--    Stylesheets-->
     <!-- ===============================================-->
     <link href="~/assets/css/theme.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <!--===============================================================================================-->
 </head>
 
 
@@ -41,15 +62,17 @@
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto pt-2 pt-lg-0 font-base">
-                        <li class="nav-item px-2" ><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a> </li>
-                        <li class="nav-item px-2" ><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="CreateBook">Create-Book</a> </li>
-                         <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#events">Events</a></li>
+                        <li class="nav-item px-2"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a> </li>
+                        <li class="nav-item px-2"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="CreateBook">Create-Book</a> </li>
+                        <li class="nav-item px-2"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="BookList">Book List</a> </li>
                         <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#services">Our Services </a></li>
                         <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#testimonial">Testimonial </a></li>
                         <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#country">Country </a></li>
                     </ul>
                     <form class="ps-lg-5">
-                        <button class="btn btn-outline-primary order-0" type="submit">Log In</button>
+                        @*<button class="btn btn-outline-primary order-0" type="submit" data-toggle="modal" data-target="#loginModal">Log In</button>*@
+                        <button class="btn btn-outline-primary order-0" type="button" data-toggle="modal" data-target="#loginModal">Log In</button>
+                        
                     </form>
                 </div>
             </div>
@@ -61,16 +84,136 @@
             @RenderBody()
         </main>
     </div>
+    <div id="dropDownSelect1"></div>
+
+    <!--Login modal-->
+    <div class="modal fade" id="loginModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="limiter">
+                        <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+                            <div class="wrap-login100">
+                                <form class="login100-form validate-form">
+                                    <span class="login100-form-logo">
+                                        <i class="zmdi zmdi-landscape"></i>
+                                    </span>
+
+                                    <span class="login100-form-title p-b-34 p-t-27">
+                                        Log in
+                                    </span>
+
+                                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                                        <input class="input100" type="text" name="username" placeholder="Username">
+                                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                                    </div>
+
+                                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                        <input class="input100" type="password" name="pass" placeholder="Password">
+                                        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                                    </div>
+
+                                    <div class="contact100-form-checkbox">
+                                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                        <label class="label-checkbox100" for="ckb1">
+                                            Remember me
+                                        </label>
+                                    </div>
+
+                                    <div class="container-login100-form-btn">
+                                        <button class="login100-form-btn">
+                                            Login
+                                        </button>
+                                    </div>
+
+                                    <div class="text-center p-t-90">
+                                        <a class="txt1" href="#" data-target="#pwdModal" data-toggle="modal">Forgot Password?</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Forget Password modal-->
+    <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" color="blue">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3><i class="fa fa-lock fa-3x"></i></h3>
+                    <h2 class="text-center">Forgot Password?</h2>
+                </div>
+                <div class="modal-body" style="background-color: blueviolet;">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="text-center">
+
+                                    <p style="color:white;">You can reset your password here.</p>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <input class="form-control input-lg" placeholder="E-mail Address" name="email" type="email">
+                                            </div>
+                                            <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <!-- ===============================================-->
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
+    <!--===============================================================================================-->
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+
+    <script src="~/vendor/bootstrap/js/popper.js"></script>   
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    @*<script src="~/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/vendor/daterangepicker/daterangepicker.js"></script>*@
+    <!--===============================================================================================-->
+    @*<script src="~/vendor/countdowntime/countdowntime.js"></script>*@
+    <!--===============================================================================================-->
+    <script src="~/js/main.js"></script>
+
+
     <script src="~/vendorjs/popper.min.js"></script>
     <script src="~/vendorjs/bootstrap.min.js"></script>
-    <script src="~/vendorjs/is.min.js"></script>
+        <script src="~/vendorjs/is.min.js"></script>
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-    <script src="~/assets/js/theme.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+        <script src="~/assets/js/theme.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 
@@ -80,7 +223,7 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

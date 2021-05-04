@@ -1,10 +1,12 @@
 ﻿
+@model eLibraryPortal.Data.Models.Book
 @{
     ViewData["Title"] = "Create Book";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+Layout = "~/Views/Admin/_Layout.cshtml";
 }
 
-    <div  class="container">
+    <div class="container">
         <div class="container-fluid">
             <br /><br /><br /><br />
             <div class="row">
@@ -14,92 +16,87 @@
                             <h2 class="card-title"> Create Book</h2>
                         </div>
                         <div class="card-body">
-                            <form asp-action="Admin" asp-controller="PostCreateBook" method="post" enctype="multipart/form-data">
+                            <form asp-action="PostCreateBook" asp-controller="Admin" method="post" enctype="multipart/form-data">
                                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Book Name</label>
-                                            <input type="text" name="BookName" value="" class="form-control" placeholder="Enter Book Name" required/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Book Edition</label>
-                                            <input type="text" name="BookEdition" value="" class="form-control" placeholder="Enter Book Edition" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>ISBN</label>
-                                            <input type="text" name="ISBN" value="" class="form-control" placeholder="Enter ISBN" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>BookAuthor</label>
-                                            <input type="text" name="BookAuthor" value="" class="form-control" placeholder="Enter BookAuthor" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>BookAuthor</label>
-                                            <input type="text" name="BookAuthor" value="" class="form-control" placeholder="Enter BookAuthor" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Category</label>
-                                            <select class="form-control" name="Categories">
-                                                <option disabled="disabled" value="">Select Category</option>
-                                                <option value="Science">Science</option>
-                                                <option value="Fiction">Fiction</option>
-                                                <option value="Classy">Classy</option>
-                                                <option value="Investigative">Investigative</option>
-                                                <option value="Romance">Romance</option>
-                                                <option value="Commedy">Commedy</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="file" name="BookImage" value="" />
-                                            <p> <small>Upload the picture of this book.</small></p>
-                                        </div>
 
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="BookName">Book Name:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="BookName" placeholder="Enter Book Name">
                                     </div>
-
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="file" name="FileAthachment" value="" required/>
-                                            <p> <small>Upload the book.</small></p>
-                                        </div>
 
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="BookEdition">Book Edition:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="BookEdition" placeholder="Enter Book Edition">
                                     </div>
+                                </div>
 
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="ISBN">ISBN:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="ISBN" placeholder="Enter ISBN">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="BookAuthor">Book Author:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="BookAuthor" placeholder="Enter Book Author">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="Category">Select Category:</label>
+                                    <div class="col-sm-5">
+                                        <select class="form-control" name="Categories">
+                                            @*<option disabled="disabled" value="">Select Category</option>*@
+                                            <option value="Science">Science</option>
+                                            <option value="Fiction">Fiction</option>
+                                            <option value="Classy">Classy</option>
+                                            <option value="Investigative">Investigative</option>
+                                            <option value="Romance">Romance</option>
+                                            <option value="Commedy">Commedy</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="cname">Select Published Date:</label>
+                                    <div class="col-sm-5">
+                                        <input type="date" class="form-control" name="PublishedDate" max="">
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="form-group">
+                                    <div class="col-sm-5">
+                                        <input type="file" class="form-control" name="BookImage">
+                                        <p> <small>Upload the picture of this book.</small></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-5">
+                                        <input type="file" class="form-control" name="FileAthachment">
+                                        <p> <small>Upload the book.</small></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-5">
+                                        <button type="submit" class="form-control btn btn-primary">Create Vendor</button>
+                                    </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
 
+        </div>
+        <br /><br /><br /><br />
     </div>
 
 
