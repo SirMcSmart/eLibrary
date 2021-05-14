@@ -439,7 +439,9 @@
   border-top: 1px solid #445b65; }
 
 .light-theme .sidebar-wrapper {
-  background-color: #ececec; }
+    background-color: #9fa1ff;
+}
+  /*background-color: #ececec; }*/
   .light-theme .sidebar-wrapper .sidebar-item {
     border-top: 1px solid #f9f9f9; }
     .light-theme .sidebar-wrapper .sidebar-item:first-child {

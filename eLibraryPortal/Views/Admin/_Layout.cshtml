@@ -1,4 +1,5 @@
-﻿
+﻿@using eLibraryPortal.Core.Helper;
+@using Newtonsoft.Json;
 <!DOCTYPE html>
 
 <html>
@@ -22,10 +23,10 @@
     <link href="~/css_sidebar/main.css" rel="stylesheet" />
     <link href="~/css_sidebar/sidebar-themes.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
- 
+
 </head>
 <body>
-    <div class="page-wrapper default-theme sidebar-bg bg1 toggled">
+    <div class="page-wrapper ice-theme sidebar-bg bg1 toggled">
         <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <!-- sidebar-brand  -->
@@ -92,6 +93,19 @@
                             </div>
                         </li>
                         <li class="">
+                            <a asp-area="" asp-controller="Admin" asp-action="CreateUsers">
+                                <i class="fa fa-user"></i>
+                                <span class="menu-text">Create-Users</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a asp-area="" asp-controller="Admin" asp-action="UsersList">
+                                <i class="fa fa-user-circle"></i>
+                                <span class="menu-text">Users-List</span>
+                            </a>
+                        </li>
+
+                        <li class="">
                             <a asp-area="" asp-controller="Admin" asp-action="CreateBook">
                                 <i class="fa fa-book"></i>
                                 <span class="menu-text">Create-Book</span>
@@ -113,29 +127,14 @@
                             </a>
 
                         </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="#">
+                        <li>
+                            <a asp-controller="Admin" asp-action="BookSuggestionList">
                                 <i class="fa fa-chart-line"></i>
-                                <span class="menu-text">Charts</span>
+                                <span class="menu-text">Book-Suggestion List</span>
                             </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="#">Pie chart</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Line chart</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Bar chart</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Histogram</a>
-                                    </li>
-                                </ul>
-                            </div>
+
                         </li>
+
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-globe"></i>
@@ -355,6 +354,21 @@
 
     <script src="~/js_sidebar/main.js"></script>
     @RenderSection("Scripts", required: false)
+
+   
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+    <script src="~/js/toastrmin.js"></script>
+    <script src="~/js/sweetalert.js"></script>
+    <script src="~/js/sweetalertmin.js"></script>
+    @RenderSection("Scripts", required: false)
+
+    @if (TempData["swMESSAGE"] != null)
+    {
+        <script>
+            @Html.Raw(Utility.ShowMessage(JsonConvert.DeserializeObject<AlertMessage>(TempData["swMESSAGE"].ToString())));
+
+        </script>
+    }
 </body>
 
 </html>

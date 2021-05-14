@@ -1,0 +1,51 @@
+.form-gap {
+    padding-top: 100px;
+}
+.container{
+    padding-top: 20px;
+	padding-left: 0px;
+}
+
+.container-small-2 {
+    padding-top: 30px;
+}
+
+.container-small-1 {
+    padding-top: 20px;
+	padding-left: 0px;
+}
+#reset-big-test {
+	color: #1c0449;
+}
+
+#reset-small-test {
+	color: blueviolet;
+}
+
+#resetbutton {
+	padding-top: 20px;
+}
+
+.pass_show{position: relative} 
+
+.pass_show .ptxt { 
+
+position: absolute; 
+
+top: 50%; 
+
+right: 10px; 
+
+z-index: 1; 
+
+color: #f36c01; 
+
+margin-top: -10px; 
+
+cursor: pointer; 
+
+transition: .3s ease all; 
+
+} 
+
+.pass_show .ptxt:hover{color: #333333;} 

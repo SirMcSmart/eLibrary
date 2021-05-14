@@ -18,5 +18,12 @@ namespace eLibraryPortal.Data.Models
         public DateTime DateOfBirth { get; set; }
         public Role UserRole { get; set; }
         public Status UserStatus { get; set; }
+
+        public string CreatedBy { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime DateModified { get; set; }
+        public Boolean IsDeleted { get; set; }
+
     }
 }

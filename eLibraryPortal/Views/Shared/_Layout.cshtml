@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using eLibraryPortal.Core.Helper;
+@using Newtonsoft.Json;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -71,8 +73,8 @@
                     </ul>
                     <form class="ps-lg-5">
                         @*<button class="btn btn-outline-primary order-0" type="submit" data-toggle="modal" data-target="#loginModal">Log In</button>*@
-                        <button class="btn btn-outline-primary order-0" type="button" data-toggle="modal" data-target="#loginModal">Log In</button>
-                        
+                        <button class="btn btn-outline-primary order-0" type="button" data-toggle="modal" data-target="#login-modal">Log In</button>
+
                     </form>
                 </div>
             </div>
@@ -87,20 +89,22 @@
     <div id="dropDownSelect1"></div>
 
     <!--Login modal-->
-    <div class="modal fade" id="loginModal">
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" style="padding-top: 150px;">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
+
+            <!-- login modal content -->
+            <div class="modal-content" id="login-modal-content" style="height: 652px;width: 500px;">
+                <div class="modal-header border-bottom-0" style="padding-bottom: 10px;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="height: 580px;padding-top: 10px; background-color:#9152f8;">
 
-                    <div class="limiter">
-                        <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-                            <div class="wrap-login100">
-                                <form class="login100-form validate-form">
+                    <div class="limiter" id="Login-Form" style="height: 566px;">
+                        <div class="container-login100" style="background-image: url('images/bg-01.jpg');height: 560px;">
+                            <div class="wrap-login100" style="padding-top: 20px;padding-bottom: 37px;height: 537px;">
+                                <form class="login100-form validate-form" style="height: 480px;">
                                     <span class="login100-form-logo">
                                         <i class="zmdi zmdi-landscape"></i>
                                     </span>
@@ -132,8 +136,8 @@
                                         </button>
                                     </div>
 
-                                    <div class="text-center p-t-90">
-                                        <a class="txt1" href="#" data-target="#pwdModal" data-toggle="modal">Forgot Password?</a>
+                                    <div class="text-center p-t-90" style="padding-top: 10px;">
+                                        <a class="txt1" id="FPModal" href="javascript:void(0)">Forgot Password?</a>
                                     </div>
                                 </form>
                             </div>
@@ -141,31 +145,42 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!--Forget Password modal-->
-    <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" color="blue">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3><i class="fa fa-lock fa-3x"></i></h3>
-                    <h2 class="text-center">Forgot Password?</h2>
+            <!-- End of login modal content -->
+            <!-- forgot password content -->
+            <div class="modal-content" id="forgot-password-modal-content" style="display: none;">
+                <div class="modal-header border-bottom-0" style="padding-bottom: 10px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-body" style="background-color: blueviolet;">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="text-center">
+                <div class="modal-body" style="background-color:#9152f8;">
+                    <div class="limiter" id="Forgot-Password-Form">
+                        <div class="container-login100">
+                            <div class="wrap-login100">
+                                <div class="login100-form validate-form">
 
-                                    <p style="color:white;">You can reset your password here.</p>
-                                    <div class="panel-body">
+                                    <span class="login100-form-logo">
+                                        <i class="zmdi zmdi-landscape"></i>
+                                    </span>
+
+                                    <p class="login100-form-title p-b-34 p-t-27">Reset password</p>
+                                    <div>
                                         <fieldset>
                                             <div class="form-group">
-                                                <input class="form-control input-lg" placeholder="E-mail Address" name="email" type="email">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                                    <input name="email" id="email" type="email" class="form-control input-lg" placeholder="Enter Email" required data-parsley-type="email">
+                                                </div>
                                             </div>
-                                            <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
+                                            <div class="container-login100-form-btn">
+                                                <button class="login100-form-btn">
+                                                    Send My Password
+                                                </button>
+                                            </div>
+
+                                            <div class="text-center p-t-90" style="padding-top: 10px;">
+                                                <p class="txt1">Remember Password ? <a class="txt1" id="loginModal1" href="javascript:void(0)">Login Here!</a></p>
+                                            </div>
                                         </fieldset>
                                     </div>
                                 </div>
@@ -173,12 +188,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="col-md-12">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    </div>
-                </div>
             </div>
+            <!-- End forgot password content -->
+
         </div>
     </div>
 
@@ -195,25 +207,44 @@
     <script src="~/vendor/animsition/js/animsition.min.js"></script>
     <!--===============================================================================================-->
 
-    <script src="~/vendor/bootstrap/js/popper.js"></script>   
+    <script src="~/vendor/bootstrap/js/popper.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!--===============================================================================================-->
     <script src="~/vendor/select2/select2.min.js"></script>
     <!--===============================================================================================-->
     @*<script src="~/vendor/daterangepicker/moment.min.js"></script>
-    <script src="~/vendor/daterangepicker/daterangepicker.js"></script>*@
+        <script src="~/vendor/daterangepicker/daterangepicker.js"></script>*@
     <!--===============================================================================================-->
     @*<script src="~/vendor/countdowntime/countdowntime.js"></script>*@
     <!--===============================================================================================-->
     <script src="~/js/main.js"></script>
 
+    <script>
+
+        $(document).ready(function () {
+
+            $('#FPModal').click(function () {
+                $('#login-modal-content').fadeOut('fast', function () {
+                    $('#forgot-password-modal-content').fadeIn('fast');
+                });
+            });
+
+            $('#loginModal1').click(function () {
+                $('#forgot-password-modal-content').fadeOut('fast', function () {
+                    $('#login-modal-content').fadeIn('fast');
+                });
+            });
+
+        });
+    </script>
+
 
     <script src="~/vendorjs/popper.min.js"></script>
     <script src="~/vendorjs/bootstrap.min.js"></script>
-        <script src="~/vendorjs/is.min.js"></script>
+    <script src="~/vendorjs/is.min.js"></script>
 
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-        <script src="~/assets/js/theme.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="~/assets/js/theme.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 
@@ -223,9 +254,24 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="~/js/jquery-3.5.1.min.js"></script>
+    <script src="~/js/toastrmin.js"></script>
+    <script src="~/js/sweetalert.js"></script>
+    <script src="~/js/sweetalertmin.js"></script>
     @RenderSection("Scripts", required: false)
+
+    @if (TempData["swMESSAGE"] != null)
+    {
+        <script>
+            @Html.Raw(Utility.ShowMessage(JsonConvert.DeserializeObject<AlertMessage>(TempData["swMESSAGE"].ToString())));
+
+        </script>
+    }
 </body>
 
 </html>
