@@ -32,7 +32,20 @@ namespace eLibraryPortal.Core.Services
             _UserRepo = UserRepo;
         }
 
-
+        public List<BookSuggestion> GetBookSuggestions()
+        {
+            try
+            {
+                var bankDetails = (from a in _adc.BookSuggestions
+                                   where a.BookName != null
+                                   select a).ToList();
+                return bankDetails;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No record Found", ex);
+            }
+        }
         public async Task<bool> PostCreateUsers(Users user, IFormFile ProfileImage)
         {
             try
@@ -189,40 +202,55 @@ namespace eLibraryPortal.Core.Services
         {
             try
             {
-                Book bookItem = new Book()
-                {
-                    BookName = book.BookName,
-                    BookEdition = book.BookEdition,
-                    ISBN = book.ISBN,
-                    BookAuthor = book.BookAuthor,
-                    Categories = book.Categories,
-                    PublishedDate = book.PublishedDate,
-                    CreatedBy = "VICTOR SEUN",
-                    CreatedDate = DateTime.Today,
-                    IsDeleted = false
-                };
+                var checkBookExist = (from a in _adc.Books where a.BookName == book.BookName select a).FirstOrDefault();
 
-                if (BookImage != null)
+                if(checkBookExist == null)
                 {
-                    MemoryStream ms = new MemoryStream();
-                    BookImage.CopyTo(ms);
-                    bookItem.BookImage = ms.ToArray();
-                    ms.Close();
-                    ms.Dispose();
-                }
-                if(FileAthachment != null)
-                {
-                    MemoryStream mc = new MemoryStream();
-                    FileAthachment.CopyTo(mc);
-                    bookItem.FileAthachment = mc.ToArray();
-                    mc.Close();
-                    mc.Dispose();
-                }
-                _adc.Books.Add(bookItem);
-                await _adc.SaveChangesAsync();
+                    Book bookItem = new Book()
+                    {
+                        BookName = book.BookName,
+                        BookEdition = book.BookEdition,
+                        ISBN = book.ISBN,
+                        BookAuthor = book.BookAuthor,
+                        Categories = book.Categories,
+                        PublishedDate = book.PublishedDate,
+                        CreatedBy = "VICTOR SEUN",
+                        CreatedDate = DateTime.Today,
+                        IsDeleted = false
+                    };
 
-                return true;
-            }
+                    if (BookImage != null)
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        BookImage.CopyTo(ms);
+                        bookItem.BookImage = ms.ToArray();
+                        ms.Close();
+                        ms.Dispose();
+                    }
+                    if (FileAthachment != null)
+                    {                       
+                        MemoryStream mc = new MemoryStream();
+                        FileAthachment.CopyTo(mc);
+                        bookItem.FileAthachment = mc.ToArray();
+                        mc.Close();
+                        mc.Dispose();
+                    }
+                    _adc.Books.Add(bookItem);
+                    await _adc.SaveChangesAsync();
+
+                    //if (FileAthachment != null)
+                    //{
+                    //    int bookId = (from a in _adc.Books where a.BookName == book.BookName select a.Id).FirstOrDefault();
+                    //    MemoryStream mc = new MemoryStream();
+                    //    FileAthachment.CopyTo(mc);
+                    //    bookItem.FileAthachment = mc.ToArray();
+                    //    mc.Close();
+                    //    mc.Dispose();
+                    //}
+                    return true;
+                }
+                return false;
+            }                
             catch (Exception ex)
             {
 
@@ -230,15 +258,14 @@ namespace eLibraryPortal.Core.Services
             }
         }
 
-
-        public List<BookSuggestion> GetBookSuggestions()
+        public List<Book> GetBookList()
         {
             try
             {
-                var bankDetails =  (from a in _adc.BookSuggestions   
-                                         where a.BookName != null
-                                         select a).ToList();
-                return bankDetails;
+                var UsersDetails = (from a in _adc.Books
+                                    where a.BookName != null
+                                    select a).ToList();
+                return UsersDetails;
             }
             catch (Exception ex)
             {
@@ -246,21 +273,77 @@ namespace eLibraryPortal.Core.Services
             }
         }
 
-
-        public async Task<List<BookSuggestion>> GetBookSuggestions22()
+        public Book GetBook2Edit(int Id)
         {
             try
             {
-                var bankDetails = await (from a in _adc.BookSuggestions
-                                         where a.BookName != null
-                                         select a).ToListAsync();
-                return bankDetails;
+                var UsersDetails = (from a in _adc.Books
+                                    where a.Id == Id && a.IsDeleted == false
+                                    select a).FirstOrDefault();
+                return UsersDetails;
             }
             catch (Exception ex)
             {
                 throw new Exception("No record Found", ex);
             }
         }
+
+        public async Task<bool> PostEditBook(Book book, IFormFile BookImage, IFormFile FileAthachment)
+        {
+            try
+            {
+                var bookDetails = await (from a in _adc.Books where a.Id == book.Id && a.IsDeleted == false  select a).FirstOrDefaultAsync();
+                //var resp = _adc.Books.FindAsync(book);
+
+                bookDetails.BookName = book.BookName;
+                bookDetails.BookEdition = book.BookEdition;
+                bookDetails.ISBN = book.ISBN;
+                bookDetails.BookAuthor = book.BookAuthor;
+                bookDetails.Categories = book.Categories;
+                bookDetails.PublishedDate = book.PublishedDate;
+                bookDetails.ModifiedBy = "VICTOR SEUN 44";
+                bookDetails.ModifiedDate = DateTime.Today;
+                bookDetails.IsDeleted = book.IsDeleted;
+
+                if (BookImage != null)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    BookImage.CopyTo(ms);
+                    bookDetails.BookImage = ms.ToArray();
+                    ms.Close();
+                    ms.Dispose();
+                }
+                if (FileAthachment != null)
+                {
+                    MemoryStream mc = new MemoryStream();
+                    FileAthachment.CopyTo(mc);
+                    bookDetails.FileAthachment = mc.ToArray();
+                    mc.Close();
+                    mc.Dispose();
+                }
+
+                _adc.Books.Update(bookDetails);
+               var res = _adc.SaveChanges();
+
+                if(res == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
 
     }
 }

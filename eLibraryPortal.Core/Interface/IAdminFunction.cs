@@ -9,13 +9,18 @@ namespace eLibraryPortal.Core.Interface
 {
     public interface IAdminFunction
     {
+        List<BookSuggestion> GetBookSuggestions();
         Task<bool> PostCreateUsers(Users user, IFormFile ProfileImage);
         List<Users> GetUsersList();
         Users GetUser2Edit(long Id);
         Task<bool> PostEditUsers(Users user, IFormFile ProfileImage);
         Task<bool> SaveBook(Book book, IFormFile BookImage, IFormFile FileAthachment);
+        List<Book> GetBookList();
+        Book GetBook2Edit(int Id);
 
-        List<BookSuggestion> GetBookSuggestions();
-        Task<List<BookSuggestion>> GetBookSuggestions22();
+        Task<bool> PostEditBook(Book book, IFormFile BookImage, IFormFile FileAthachment);
+
+
+
     }
 }

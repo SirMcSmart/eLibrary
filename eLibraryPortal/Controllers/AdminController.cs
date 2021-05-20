@@ -36,49 +36,7 @@ namespace eLibraryPortal.Controllers
         {
             return View();
         }
-        public IActionResult CreateBook()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostCreateBook(Book book, IFormFile BookImage , IFormFile FileAthachment)
-        {
-            try
-            {
-                if (book.BookName != null || book.BookEdition != null)
-                {
-                   
-                    var status = await _adminFunc.SaveBook( book, BookImage , FileAthachment);
-                    if(status == true)
-                    {
-                        //Successful
-                    }
-                    else
-                    {
-                        //Not Successful
-                    }
-                }
-                else
-                {
-
-                }
-                return View("CreateBook");
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public IActionResult BookList()
-        {
-            return View();
-        }
-
+       
         public IActionResult BookSuggestionList()
         {
             var result = _adminFunc.GetBookSuggestions();
@@ -179,6 +137,111 @@ namespace eLibraryPortal.Controllers
             }
 
         }
+
+        public IActionResult CreateBook()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostCreateBook(Book book, IFormFile BookImage, IFormFile FileAthachment)
+        {
+            try
+            {
+                if (book.BookName != null || book.BookEdition != null)
+                {
+
+                    var status = await _adminFunc.SaveBook(book, BookImage, FileAthachment);
+                    if (status)
+                    {
+                        //Successful
+                        var showMessage = new AlertMessage
+                        {
+                            Title = "ADD BOOK MESSAGE",
+                            Message = "Book has been added successfully!",
+                            MessageType = MessageType.SuccessMessage
+                        };
+                        Message = JsonConvert.SerializeObject(showMessage);
+                        return RedirectToAction("CreateBook");
+                    }
+                    else
+                    {
+                        //Not Successful
+                        var showMessage = new AlertMessage
+                        {
+                            Title = "ADD BOOK MESSAGE",
+                            Message = "Book was not successfully added!",
+                            MessageType = MessageType.ErrorMessage
+                        };
+                        Message = JsonConvert.SerializeObject(showMessage);
+                    }
+                }
+                
+                return View("CreateBook");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public IActionResult BookList()
+        {
+            var result = _adminFunc.GetBookList();
+            return View(result);
+        }
+        public IActionResult EditBook(int Id)
+        {
+            var result = _adminFunc.GetBook2Edit(Id);
+            return View(result);
+        }
+
+        public async Task<IActionResult> PostEditBook(Book book, IFormFile BookImage, IFormFile FileAthachment)
+        {
+            try
+            {
+                if(book.BookName != null || book.BookEdition != null)
+                {
+                    var status = await _adminFunc.PostEditBook(book, BookImage, FileAthachment);
+
+                    if (status)
+                    {
+                        //Successful
+                        var showMessage = new AlertMessage
+                        {
+                            Title = "EDIT BOOK MESSAGE",
+                            Message = "Book has been edited successfully!",
+                            MessageType = MessageType.SuccessMessage
+                        };
+                        Message = JsonConvert.SerializeObject(showMessage);
+                        return RedirectToAction("BookList");
+                    }
+                    else
+                    {
+                        //Not Successful
+                        var showMessage = new AlertMessage
+                        {
+                            Title = "EDIT BOOK MESSAGE",
+                            Message = "Book was not successfully edited!",
+                            MessageType = MessageType.ErrorMessage
+                        };
+                        Message = JsonConvert.SerializeObject(showMessage);
+                    }
+                }
+
+                return RedirectToAction("BookList");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public AlertMessage showMessage { get; set; }
         public object Message
         {
