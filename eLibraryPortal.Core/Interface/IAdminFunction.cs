@@ -14,7 +14,7 @@ namespace eLibraryPortal.Core.Interface
         List<Users> GetUsersList();
         Users GetUser2Edit(long Id);
         Task<bool> PostEditUsers(Users user, IFormFile ProfileImage);
-        Task<bool> SaveBook(Book book, IFormFile BookImage, IFormFile FileAthachment);
+        Task<string> SaveBook(Book book, IFormFile BookImage, IFormFile FileAthachment);
         List<Book> GetBookList();
         Book GetBook2Edit(int Id);
 

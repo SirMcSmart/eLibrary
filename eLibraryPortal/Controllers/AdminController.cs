@@ -153,7 +153,18 @@ namespace eLibraryPortal.Controllers
                 {
 
                     var status = await _adminFunc.SaveBook(book, BookImage, FileAthachment);
-                    if (status)
+                    if (status == "Wrong file extension") 
+                    {
+                        var showMessage = new AlertMessage
+                        {
+                            Title = "ADD BOOK MESSAGE",
+                            Message = "Please check the file extension. You only accept .pdf file",
+                            MessageType = MessageType.ErrorMessage
+                        };
+                        Message = JsonConvert.SerializeObject(showMessage);
+                        return RedirectToAction("CreateBook");
+                    }
+                    else if(status == "Success")
                     {
                         //Successful
                         var showMessage = new AlertMessage

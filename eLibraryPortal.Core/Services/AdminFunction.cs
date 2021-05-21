@@ -2,6 +2,7 @@
 using eLibraryPortal.Data.Context;
 using eLibraryPortal.Data.Enums;
 using eLibraryPortal.Data.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,14 +23,21 @@ namespace eLibraryPortal.Core.Services
         private readonly UserManager<Users> _userManager;
         private readonly RoleManager<UserRole> _roleManager;
         private readonly IRepository<Users> _UserRepo;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IWebHostEnvironment _wenHostEnv;
 
-        public AdminFunction(ApplicationDbContext adc, IConfiguration config, UserManager<Users> userManager, RoleManager<UserRole> roleManager, IRepository<Users> UserRepo)
+        private const string ATTACHEMENT_FOLDER = "ATTACHEMENT_UPLOAD_FOLDER";
+
+        public AdminFunction(ApplicationDbContext adc, IConfiguration config, UserManager<Users> userManager, RoleManager<UserRole> roleManager, IRepository<Users> UserRepo, IHttpContextAccessor contextAccessor,IWebHostEnvironment wenHostEnv)
         {
             _adc = adc;
             _config = config;
             _userManager = userManager;
             _roleManager = roleManager;
             _UserRepo = UserRepo;
+            _contextAccessor = contextAccessor;
+            _wenHostEnv = wenHostEnv;
+
         }
 
         public List<BookSuggestion> GetBookSuggestions()
@@ -198,10 +206,34 @@ namespace eLibraryPortal.Core.Services
             }
 
         }
-        public async Task<bool> SaveBook(Book book, IFormFile BookImage, IFormFile FileAthachment)
+        public async Task<string> SaveBook(Book book, IFormFile BookImage, IFormFile FileAthachment)
         {
             try
             {
+                var statusMsg = " ";
+                string[] allowExt = new string[1] { ".pdf" };
+                string extension = Path.GetExtension(FileAthachment.FileName);
+
+                if (!allowExt.Contains(extension))
+                {
+                    statusMsg = "Wrong file extension";
+                    return statusMsg;
+                }
+
+                var date = DateTime.Today;
+                var host = _contextAccessor.HttpContext.Request.Host.Value;
+                var rootFolder = "FileName_" + book.BookName;
+                var path = Path.Combine(GetAttachmentPath(), rootFolder);
+                var url = "https://" + host + "/ATTACHEMENT_UPLOAD_FOLDER/" + rootFolder + "/" + FileAthachment.FileName;
+                var filePath = Path.Combine(path, FileAthachment.FileName);
+
+                DirectoryInfo d = new DirectoryInfo(path);
+                if (!d.Exists)
+                {
+                    d.Create();
+                }
+
+
                 var checkBookExist = (from a in _adc.Books where a.BookName == book.BookName select a).FirstOrDefault();
 
                 if(checkBookExist == null)
@@ -238,18 +270,35 @@ namespace eLibraryPortal.Core.Services
                     _adc.Books.Add(bookItem);
                     await _adc.SaveChangesAsync();
 
-                    //if (FileAthachment != null)
-                    //{
-                    //    int bookId = (from a in _adc.Books where a.BookName == book.BookName select a.Id).FirstOrDefault();
-                    //    MemoryStream mc = new MemoryStream();
-                    //    FileAthachment.CopyTo(mc);
-                    //    bookItem.FileAthachment = mc.ToArray();
-                    //    mc.Close();
-                    //    mc.Dispose();
-                    //}
-                    return true;
+                    if (FileAthachment != null)
+                    {
+                        var bookDetails = (from a in _adc.Books where a.BookName == book.BookName select a).FirstOrDefault();
+                        BookAttachement ba = new BookAttachement()
+                        {
+                            bookId = bookDetails.Id,
+                            BookDesc = bookDetails.Categories.ToString(),
+                            BookName = bookDetails.BookName,
+                            BookExt = extension,
+                            BookFilePath = filePath,
+                            BookNameUrl = url,
+                            uploadedDate = date.ToString(),
+                            IsDeleted =false
+                        };
+
+                        _adc.BookAttachements.Add(ba);
+                        await _adc.SaveChangesAsync();
+
+                        using(var fileStr = new FileStream(filePath, FileMode.Create))
+                        {
+                            await FileAthachment.CopyToAsync(fileStr);
+                        }
+                        
+                    }
+                    statusMsg = "Success";
+                    return statusMsg;
                 }
-                return false;
+                statusMsg = "Failed";
+                return statusMsg;
             }                
             catch (Exception ex)
             {
@@ -344,6 +393,27 @@ namespace eLibraryPortal.Core.Services
 
         }
 
+        public string GetAttachmentPath()
+        {
+            try
+            {
+               var WebRoot = _wenHostEnv.WebRootPath;
+               var attchePath = Path.Combine(WebRoot, ATTACHEMENT_FOLDER);
+
+                DirectoryInfo dir = new DirectoryInfo(attchePath);
+                if (!dir.Exists)
+                {
+                    dir.Create();
+                }
+
+                return Path.Combine(WebRoot, ATTACHEMENT_FOLDER);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

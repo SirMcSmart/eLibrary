@@ -12,47 +12,60 @@ Layout = "~/Views/Admin/_Layout.cshtml";
             <div class="row">
                 <div class="col-xl-10 col-md-10 ">
                     <div class="card">
-                        <div class="card-header text-center">
+                        <div class="card-header text-center text-white" style="background-color: #308bedc2;">
                             <h2 class="card-title"> Create Book</h2>
                         </div>
                         <div class="card-body">
                             <form asp-action="PostCreateBook" asp-controller="Admin" method="post" enctype="multipart/form-data">
                                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <br />
 
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="BookName">Book Name:</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" name="BookName" placeholder="Enter Book Name">
+                                <input type="hidden" asp-for="Id" name="Id" />
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <img class="me-3" src="~/assets/img/gallery/logo.png" alt="Book Image" />
+                                        </div>
+                                    </div>
+
+                                    @*<div class="offset-4 col-md-4">
+                                        <div class="form-group">
+                                            <img src="@Model.GetBookImage" alt="Book Image" width="100" height="150" />
+                                        </div>
+                                    </div>*@
+                                </div>
+                                <br />
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <label for="BookName">Book Name:</label>
+                                        <input type="text" class="form-control" asp-for="BookName" name="BookName" placeholder="Enter Book Name" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="BookEdition">Book Edition:</label>
+                                        <input type="text" class="form-control" asp-for="BookEdition" name="BookEdition" placeholder="Enter Book Edition" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="ISBN">ISBN:</label>
+                                        <input type="text" class="form-control" asp-for="ISBN" name="ISBN" placeholder="Enter ISBN" required>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="BookEdition">Book Edition:</label>
+                                <br />
+                                <div class="form-group row">
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control" name="BookEdition" placeholder="Enter Book Edition">
+                                        <label for="BookAuthor">Book Author:</label>
+                                        <input type="text" class="form-control" asp-for="BookAuthor" name="BookAuthor" placeholder="Enter Book Author" required>
+                                    </div>
+                                    <div class="offset-2 col-sm-5">
+                                        <label for="PublishedDate">Published Date:</label>
+                                        <input type="date" class="form-control" asp-for="PublishedDate" name="PublishedDate" max="" required>
                                     </div>
                                 </div>
-
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="ISBN">ISBN:</label>
+                                <br />
+                                <div class="form-group row">
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control" name="ISBN" placeholder="Enter ISBN">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="BookAuthor">Book Author:</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" name="BookAuthor" placeholder="Enter Book Author">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" for="Category">Select Category:</label>
-                                    <div class="col-sm-5">
-                                        <select class="form-control" name="Categories">
-                                            @*<option disabled="disabled" value="">Select Category</option>*@
+                                        <label for="Categories">Select Category:</label>
+                                        <select class="form-control" asp-for="Categories" name="Categories" required>
                                             <option value="Science">Science</option>
                                             <option value="Fiction">Fiction</option>
                                             <option value="Classy">Classy</option>
@@ -61,33 +74,40 @@ Layout = "~/Views/Admin/_Layout.cshtml";
                                             <option value="Commedy">Commedy</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" for="cname">Select Published Date:</label>
-                                    <div class="col-sm-5">
-                                        <input type="date" class="form-control" name="PublishedDate" max="">
+                                    <div class="offset-2 col-sm-5">
+                                        <label for="IsDeleted">User Status:</label>
+                                        <select class="form-control" asp-for="IsDeleted" name="IsDeleted" required>
+                                            <option value="false">Enable</option>
+                                            <option value="true">Disable</option>
+                                        </select>
                                     </div>
                                 </div>
 
                                 <br />
-                                <div class="form-group">
+                                <div class="form-group row">
                                     <div class="col-sm-5">
-                                        <input type="file" class="form-control" name="BookImage">
-                                        <p> <small>Upload the picture of this book.</small></p>
+                                        <label for="BookImage">Attach Book Image:</label>
+                                        <input type="file" class="form-control" name="BookImage" required>
+                                        <p> <small>Upload Profile Image.</small></p>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-5">
-                                        <input type="file" class="form-control" name="FileAthachment">
-                                        <p> <small>Upload the book.</small></p>
+                                    <div class="offset-2 col-sm-5">
+                                        <label for="FileAthachment">Athach PDF file:</label>
+                                        <input type="file" class="form-control" name="FileAthachment" required>
+                                        <p> <small>please Upload PDF only.</small></p>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-5">
-                                        <button type="submit" class="form-control btn btn-primary">Create Book</button>
+
+                                <br />
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <div class="offset-4 col-md-4">
+                                            <button type="submit" class="form-control btn btn-primary">Create Book</button>
+                                        </div>
+
                                     </div>
                                 </div>
+
                             </form>
 
                         </div>
