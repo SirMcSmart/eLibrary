@@ -1,4 +1,5 @@
-﻿using eLibraryPortal.Core.Interface;
+﻿using eLibraryPortal.Core.Const;
+using eLibraryPortal.Core.Interface;
 using eLibraryPortal.Data.Context;
 using eLibraryPortal.Data.Enums;
 using eLibraryPortal.Data.Models;
@@ -58,6 +59,7 @@ namespace eLibraryPortal.Core.Services
         {
             try
             {
+                var fullname = _contextAccessor.HttpContext.Request.Cookies[Constants.COOKIE_KEY_FOR_FULLNAME];
                 var DPassword = _config.GetValue<string>("eLibrary:DefaultPassword");
                 if (!await _roleManager.RoleExistsAsync(user.UserRole.ToString()))
                 {
@@ -78,7 +80,7 @@ namespace eLibraryPortal.Core.Services
                         DateOfBirth = user.DateOfBirth,
                         UserRole = user.UserRole,
                         UserStatus = Status.Enable,
-                        CreatedBy = " Nancy Bukola",
+                        CreatedBy = fullname,
                         DateCreated = DateTime.Now,
                         Address = user.Address
                     };
@@ -150,7 +152,7 @@ namespace eLibraryPortal.Core.Services
         {
             try
             {
-               
+                var fullname = _contextAccessor.HttpContext.Request.Cookies[Constants.COOKIE_KEY_FOR_FULLNAME];
                 if (!await _roleManager.RoleExistsAsync(user.UserRole.ToString()))
                 {
                     throw new Exception(string.Format("Invalid User Role [{0}]", user.UserRole));
@@ -176,7 +178,7 @@ namespace eLibraryPortal.Core.Services
                     eeUser.DateOfBirth = user.DateOfBirth;
                     eeUser.UserRole = user.UserRole;
                     eeUser.UserStatus = Status.Enable;
-                    eeUser.ModifiedBy = " Nancy Bukola";
+                    eeUser.ModifiedBy = fullname;
                     eeUser.DateModified = DateTime.Now;
                     eeUser.Address = user.Address;
 
@@ -233,10 +235,11 @@ namespace eLibraryPortal.Core.Services
                     d.Create();
                 }
 
-
+                var fullname = _contextAccessor.HttpContext.Request.Cookies[Constants.COOKIE_KEY_FOR_FULLNAME];
                 var checkBookExist = (from a in _adc.Books where a.BookName == book.BookName select a).FirstOrDefault();
+                
 
-                if(checkBookExist == null)
+                if (checkBookExist == null)
                 {
                     Book bookItem = new Book()
                     {
@@ -246,7 +249,7 @@ namespace eLibraryPortal.Core.Services
                         BookAuthor = book.BookAuthor,
                         Categories = book.Categories,
                         PublishedDate = book.PublishedDate,
-                        CreatedBy = "VICTOR SEUN",
+                        CreatedBy = fullname,
                         CreatedDate = DateTime.Today,
                         IsDeleted = false
                     };
@@ -341,6 +344,7 @@ namespace eLibraryPortal.Core.Services
         {
             try
             {
+                var fullname = _contextAccessor.HttpContext.Request.Cookies[Constants.COOKIE_KEY_FOR_FULLNAME];
                 var bookDetails = await (from a in _adc.Books where a.Id == book.Id && a.IsDeleted == false  select a).FirstOrDefaultAsync();
                 //var resp = _adc.Books.FindAsync(book);
 
@@ -350,7 +354,7 @@ namespace eLibraryPortal.Core.Services
                 bookDetails.BookAuthor = book.BookAuthor;
                 bookDetails.Categories = book.Categories;
                 bookDetails.PublishedDate = book.PublishedDate;
-                bookDetails.ModifiedBy = "VICTOR SEUN 44";
+                bookDetails.ModifiedBy = fullname;
                 bookDetails.ModifiedDate = DateTime.Today;
                 bookDetails.IsDeleted = book.IsDeleted;
 

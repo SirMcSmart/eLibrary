@@ -1,5 +1,16 @@
 ﻿@using eLibraryPortal.Core.Helper;
+@using eLibraryPortal.Core.Const;
 @using Newtonsoft.Json;
+
+@{ 
+    var email = Context.Request.Cookies[Constants.COOKIE_KEY_FOR_EMAIL];
+    var fullname = Context.Request.Cookies[Constants.COOKIE_KEY_FOR_FULLNAME];
+    var firstname = Context.Request.Cookies[Constants.COOKIE_KEY_FOR_FIRSTNAME];
+    var lastname = Context.Request.Cookies[Constants.COOKIE_KEY_FOR_LASTNAME];
+    var gender = Context.Request.Cookies[Constants.COOKIE_KEY_FOR_GENDER];
+    var address = Context.Request.Cookies[Constants.COOKIE_KEY_FOR_ADDRESS];
+    var phoneNo = Context.Request.Cookies[Constants.COOKIE_KEY_FOR_PHONENUMBER];
+}
 <!DOCTYPE html>
 
 <html>
@@ -40,10 +51,10 @@
                     </div>
                     <div class="user-info">
                         <span class="user-name">
-                            Jhon
-                            <strong>Smith</strong>
+                            @firstname
+                            <strong>@lastname</strong>
                         </span>
-                        <span class="user-role">Administrator</span>
+                        <span class="user-role">@phoneNo</span>
                         <span class="user-status">
                             <i class="fa fa-circle"></i>
                             <span>Online</span>
@@ -321,7 +332,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="#">
+                    <a  asp-controller="Auth" asp-action="SignOut">
                         <i class="fa fa-power-off"></i>
                     </a>
                 </div>

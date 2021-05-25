@@ -36,6 +36,12 @@ namespace eLibraryPortal
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
 
+            services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
+             {
+                 config.Cookie.Name = "CHBO.Cookies";
+                 config.LoginPath = "/Auth/Login";
+             });
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();;
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

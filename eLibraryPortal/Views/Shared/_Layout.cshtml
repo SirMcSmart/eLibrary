@@ -104,7 +104,7 @@
                     <div class="limiter" id="Login-Form" style="height: 566px;">
                         <div class="container-login100" style="background-image: url('images/bg-01.jpg');height: 560px;">
                             <div class="wrap-login100" style="padding-top: 20px;padding-bottom: 37px;height: 537px;">
-                                <form class="login100-form validate-form" style="height: 480px;">
+                                <form asp-controller="Auth" asp-action="Login" class="login100-form validate-form" style="height: 480px;">
                                     <span class="login100-form-logo">
                                         <i class="zmdi zmdi-landscape"></i>
                                     </span>
@@ -114,26 +114,24 @@
                                     </span>
 
                                     <div class="wrap-input100 validate-input" data-validate="Enter username">
-                                        <input class="input100" type="text" name="username" placeholder="Username">
+                                        <input class="input100" type="text" name="Username" placeholder="Username">
                                         <span class="focus-input100" data-placeholder="&#xf207;"></span>
                                     </div>
 
                                     <div class="wrap-input100 validate-input" data-validate="Enter password">
-                                        <input class="input100" type="password" name="pass" placeholder="Password">
+                                        <input class="input100" type="password" name="Password" placeholder="Password">
                                         <span class="focus-input100" data-placeholder="&#xf191;"></span>
                                     </div>
 
                                     <div class="contact100-form-checkbox">
-                                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="RememberMe">
                                         <label class="label-checkbox100" for="ckb1">
                                             Remember me
                                         </label>
                                     </div>
 
                                     <div class="container-login100-form-btn">
-                                        <button class="login100-form-btn">
-                                            Login
-                                        </button>
+                                        <button type="submit" class="login100-form-btn"> Login  </button>
                                     </div>
 
                                     <div class="text-center p-t-90" style="padding-top: 10px;">
